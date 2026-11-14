@@ -27,7 +27,7 @@ Environment variables:
 | `VBEE_API_BASE`   | no       | `https://api.vbee.vn`    | API base URL                                  |
 | `VBEE_WEBHOOK_URL`| no       | —                        | Fallback webhook for batch (async) TTS/STT    |
 
-The server starts without credentials; they are only required when a tool is actually called. Copy `.env.example` to `.env` (gitignored) or export the vars in your shell / MCP client config.
+The server starts without credentials; they are only required when a tool is actually called. The server does not load `.env` files — environment variables must be exported in your shell or provided by your MCP client config (e.g. the `env` block below). `.env.example` is provided as a reference for the variable names only.
 
 Example MCP client config (Claude Desktop / compatible):
 
@@ -190,7 +190,7 @@ Errors are raised as MCP tool errors with a stable `code` and `message`, mapped 
 | `MISSING_CREDENTIALS`        | —    | `VBEE_APP_ID`/`VBEE_TOKEN` not set        |
 | `MISSING_WEBHOOK_URL`        | —    | Batch call without webhook                |
 
-Tokens are never logged or committed. `.env` is gitignored; only `.env.example` (with placeholders) is tracked.
+Tokens are never logged or committed. `.env` is gitignored; only `.env.example` (with placeholders) is tracked. Note that `.env` is not read at runtime — export the variables or set them in your MCP client config.
 
 ## Development
 

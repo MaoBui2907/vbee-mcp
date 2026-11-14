@@ -203,7 +203,7 @@ def stt_transcribe(
             fh = open(file_path, "rb")  # noqa: SIM115 - passed to httpx, closed by caller below
         except OSError as exc:
             raise VbeeConfigError(code="FILE_NOT_FOUND", message=str(exc)) from exc
-        files = {"file": (file_path.rsplit("/", 1)[-1], fh, "audio/wav")}
+        files = {"audioContent": (file_path.rsplit("/", 1)[-1], fh, "audio/wav")}
         try:
             resp = client.post_multipart(settings, "/v1/stt", data, files)
         finally:
@@ -241,7 +241,7 @@ def stt_transcribe_async(
             fh = open(file_path, "rb")  # noqa: SIM115
         except OSError as exc:
             raise VbeeConfigError(code="FILE_NOT_FOUND", message=str(exc)) from exc
-        files = {"file": (file_path.rsplit("/", 1)[-1], fh, "audio/wav")}
+        files = {"audioContent": (file_path.rsplit("/", 1)[-1], fh, "audio/wav")}
         try:
             resp = client.post_multipart(settings, "/v1/stt", data, files)
         finally:

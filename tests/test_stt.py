@@ -34,7 +34,7 @@ def test_stt_sync_with_file(env, mock_http, tmp_path):
     mock_http(handler)
     out = tools.stt_transcribe(file_path=str(wav))
     assert seen["headers"]["content-type"].startswith("multipart/form-data")
-    assert b'name="file"' in seen["body"]
+    assert b'name="audioContent"' in seen["body"]
     assert b'name="mode"' in seen["body"] and b"sync" in seen["body"]
     assert out["transcriptId"] == "t1"
     assert out["audioDurationSeconds"] == 1.5
@@ -73,6 +73,7 @@ def test_stt_async(env, mock_http, tmp_path, monkeypatch):
 
     mock_http(handler)
     out = tools.stt_transcribe_async(file_path=str(wav))
+    assert b'name="audioContent"' in seen["body"]
     assert b"async" in seen["body"]
     assert b"https://example.com/hook" in seen["body"]
     assert out == {"transcriptId": "t3", "status": "PENDING"}
