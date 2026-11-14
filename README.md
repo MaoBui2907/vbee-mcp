@@ -77,6 +77,18 @@ GET `/v1/tts/requests/{requestId}` → `{requestId, status, audioLink?, error_co
 
 **Note:** `audioLink` expires after **3 minutes**; generated audio is stored for **3 days**.
 
+Example invocation:
+
+```json
+{"request_id": "9f2c1a7e-1234-4abc-8def-000000000000"}
+```
+
+Example response:
+
+```json
+{"requestId": "9f2c1a7e-1234-4abc-8def-000000000000", "status": "COMPLETED", "audioLink": "https://..."}
+```
+
 ### 4. `stt_transcribe` — Realtime STT (sync)
 
 POST `/v1/stt`, multipart/form-data, `mode=sync`. **WAV only**, file **< 10s** and **< 10MB**.
@@ -85,15 +97,51 @@ Params: exactly one of `file_path` or `audio_url`; optional `webhook_url`.
 
 Returns `{transcriptId, status, transcript, utterances[], audioDurationSeconds}`. `audioDurationSeconds` is used for prepaid billing.
 
+Example invocation:
+
+```json
+{"file_path": "/path/to/audio.wav"}
+```
+
+or with a remote URL:
+
+```json
+{"audio_url": "https://example.com/audio.wav", "webhook_url": "https://example.com/hook"}
+```
+
 ### 5. `stt_transcribe_async` — Batch STT (async)
 
 Same endpoint, `mode=async`. File **< 100MB**. `webhook_url` optional (recommended; falls back to `VBEE_WEBHOOK_URL`).
 
 Returns `{transcriptId, status}`.
 
+Example invocation:
+
+```json
+{"file_path": "/path/to/long-audio.wav", "webhook_url": "https://example.com/hook"}
+```
+
+or with a remote URL (falls back to `VBEE_WEBHOOK_URL` when `webhook_url` is omitted):
+
+```json
+{"audio_url": "https://example.com/long-audio.wav"}
+```
+
 ### 6. `stt_get_transcript` — Poll STT
 
 GET `/v1/stt/transcripts/{transcriptId}` → transcript object. Poll every **2–5 seconds**.
+
+Example invocation:
+
+```json
+{"transcript_id": "c3d4e5f6-1234-4abc-8def-000000000000"}
+```
+
+Example response:
+
+```json
+{"transcriptId": "c3d4e5f6-1234-4abc-8def-000000000000", "status": "COMPLETED", "transcript": "Xin chào...", "utterances": [], "audioDurationSeconds": 12.4}
+```
 
 ### 7. `list_voices` — List voices
 
@@ -102,6 +150,18 @@ GET `https://vbee.vn/api/public/v1/voices` with `App-Id` + `Bearer` headers.
 Params: `voice_ownership` (`VBEE`|`COMMUNITY`|`PERSONAL`, optional), `code`, `language_code` (e.g. `vi-VN`), `gender` (`male`|`female`), `limit` (1–100, default 20), `cursor`.
 
 Returns `{result: {pagination, voices[]}, status}`.
+
+Example invocation (list the first 5 Vietnamese female VBEE voices):
+
+```json
+{"voice_ownership": "VBEE", "language_code": "vi-VN", "gender": "female", "limit": 5}
+```
+
+Example invocation (paginate):
+
+```json
+{"limit": 20, "cursor": "next-cursor-from-previous-response"}
+```
 
 ## API limits & gotchas
 
