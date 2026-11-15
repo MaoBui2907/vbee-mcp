@@ -31,6 +31,7 @@ def test_list_voices_defaults(env, mock_http):
     out = tools.list_voices()
     assert seen["url"].startswith("https://vbee.vn/api/public/v1/voices")
     assert "limit=20" in seen["url"]
+    assert "voiceOwnership=VBEE" in seen["url"]
     assert seen["headers"]["app-id"] == "test-app-id"
     assert out["result"]["voices"][0]["code"].startswith("hn_female")
 
