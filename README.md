@@ -147,7 +147,7 @@ Example response:
 
 GET `https://vbee.vn/api/public/v1/voices` with `App-Id` + `Bearer` headers.
 
-Params: `voice_ownership` (`VBEE`|`COMMUNITY`|`PERSONAL`, optional), `code`, `language_code` (e.g. `vi-VN`), `gender` (`male`|`female`), `limit` (1–100, default 20), `cursor`.
+Params: `voice_ownership` (`VBEE`|`COMMUNITY`|`PERSONAL`, **required by the API** — the tool always sends it and defaults to `VBEE`), `code`, `language_code` (e.g. `vi-VN`), `gender` (`male`|`female`), `limit` (1–100, default 20), `cursor`.
 
 Returns `{result: {pagination, voices[]}, status}`.
 

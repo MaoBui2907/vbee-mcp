@@ -258,20 +258,22 @@ def stt_get_transcript(transcript_id: str) -> dict[str, Any]:
 
 
 def list_voices(
-    voice_ownership: Literal["VBEE", "COMMUNITY", "PERSONAL"] | None = None,
+    voice_ownership: Literal["VBEE", "COMMUNITY", "PERSONAL"] = "VBEE",
     code: str | None = None,
     language_code: str | None = None,
     gender: Literal["male", "female"] | None = None,
     limit: int = 20,
     cursor: str | None = None,
 ) -> dict[str, Any]:
-    """List available vbee voices. limit is 1-100 (default 20)."""
+    """List available vbee voices. limit is 1-100 (default 20).
+
+    The vbee voices API requires the voiceOwnership query parameter
+    (VBEE|COMMUNITY|PERSONAL); this tool always sends it and defaults to VBEE.
+    """
     if not (1 <= limit <= 100):
         raise VbeeConfigError(code="BAD_REQUEST", message="limit must be between 1 and 100")
     settings = _settings()
-    params: dict[str, Any] = {"limit": limit}
-    if voice_ownership:
-        params["voiceOwnership"] = voice_ownership
+    params: dict[str, Any] = {"limit": limit, "voiceOwnership": voice_ownership}
     if code:
         params["code"] = code
     if language_code:
