@@ -9,6 +9,21 @@ description = "Unofficial MCP server for vbee.vn (TTS + STT)"
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }
+keywords = ["mcp", "model-context-protocol", "vbee", "tts", "stt", "vietnamese"]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Software Development :: Libraries",
+    "Topic :: Multimedia :: Sound/Audio :: Speech",
+]
 dependencies = [
     "mcp==1.30.0",
     "httpx>=0.27,<0.29",
@@ -23,6 +38,11 @@ dev = [
 
 [project.scripts]
 vbee-mcp = "vbee_mcp.server:main"
+
+[project.urls]
+Homepage = "https://github.com/MaoBui2907/vbee-mcp"
+Repository = "https://github.com/MaoBui2907/vbee-mcp"
+Issues = "https://github.com/MaoBui2907/vbee-mcp/issues"
 
 [tool.setuptools.packages.find]
 where = ["src"]
